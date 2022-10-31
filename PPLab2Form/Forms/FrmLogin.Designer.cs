@@ -1,6 +1,6 @@
 ﻿namespace PPLab2Form.Forms
 {
-    partial class FormLogin
+    partial class FrmLogin
     {
         /// <summary>
         /// Required designer variable.
@@ -140,7 +140,6 @@
             this.Controls.Add(this.login_lbl_1);
             this.Name = "FormLogin";
             this.Text = "FormLogin";
-            this.Load += new System.EventHandler(this.FormLogin_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

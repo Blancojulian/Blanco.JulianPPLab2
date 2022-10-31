@@ -1,6 +1,6 @@
 ﻿namespace PPLab2Form.Forms
 {
-    partial class FormMateriasCursadas
+    partial class FrmMateriasCursadas
     {
         /// <summary>
         /// Required designer variable.

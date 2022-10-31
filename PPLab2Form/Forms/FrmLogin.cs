@@ -11,9 +11,9 @@ using System.Windows.Forms;
 
 namespace PPLab2Form.Forms
 {
-    public partial class FormLogin : Form
+    public partial class FrmLogin : Form
     {
-        public FormLogin()
+        public FrmLogin()
         {
             InitializeComponent();
         }
@@ -29,14 +29,16 @@ namespace PPLab2Form.Forms
             
             if(int.TryParse(this.tbx_dni.Text, out dni))
             {
-                Usuario usuario = (Alumno)ListaUsuarios.ComprobarLogin(this.tbx_nombre.Text, this.tbx_contrasenia.Text, dni);
-            
-                if(usuario is not null)
+                Alumno usuario = (Alumno)ListaUsuarios.ComprobarLogin(this.tbx_nombre.Text, this.tbx_contrasenia.Text, dni);
+                Alumno usuario2 = (Alumno)ListaUsuarios._lista[0];
+                if (usuario is not null)
                 {
                     if(usuario.NivelUsuario == NivelUsuario.Alumno)
                     {
                         this.tbx_nombre.Text = $"funciona {usuario.Apellido} {usuario.MostrarInformacion()}";
-                        new FormAlumno((Alumno)usuario);
+                        var f = new FrmAlumno(usuario);
+                        f.Show();
+                        this.Hide();
                     }
                 }
             
@@ -57,5 +59,6 @@ namespace PPLab2Form.Forms
         {
 
         }
+
     }
 }

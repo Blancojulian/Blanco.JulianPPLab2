@@ -1,6 +1,6 @@
 ﻿namespace PPLab2Form.Forms
 {
-    partial class FormMenu
+    partial class FrmMenu
     {
         /// <summary>
         /// Required designer variable.

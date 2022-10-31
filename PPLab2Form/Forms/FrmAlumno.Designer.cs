@@ -1,6 +1,6 @@
 ﻿namespace PPLab2Form.Forms
 {
-    partial class FormAlumno
+    partial class FrmAlumno
     {
         /// <summary>
         /// Required designer variable.
@@ -53,6 +53,7 @@
             this.btn_mostrarMaterias.TabIndex = 1;
             this.btn_mostrarMaterias.Text = "Materias cursadas";
             this.btn_mostrarMaterias.UseVisualStyleBackColor = true;
+            this.btn_mostrarMaterias.Click += new System.EventHandler(this.btn_mostrarMaterias_Click);
             // 
             // btn_mostrarExamenes
             // 
@@ -74,6 +75,7 @@
             this.Controls.Add(this.lbl_bienvenida);
             this.Name = "FormAlumno";
             this.Text = "FormAlumno";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormAlumno_FormClosing);
             this.Load += new System.EventHandler(this.FormAlumno_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

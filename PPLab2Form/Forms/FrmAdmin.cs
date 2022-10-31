@@ -10,11 +10,16 @@ using System.Windows.Forms;
 
 namespace PPLab2Form.Forms
 {
-    public partial class FormMenu : Form
+    public partial class FrmAdmin : Form
     {
-        public FormMenu()
+        public FrmAdmin()
         {
             InitializeComponent();
+        }
+
+        private void FrmAdmin_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

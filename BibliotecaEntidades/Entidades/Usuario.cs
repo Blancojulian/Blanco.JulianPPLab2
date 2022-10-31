@@ -1,17 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace BibliotecaEntidades.Entidades
 {
-    public enum NivelUsuario
-    {
-        Admin,
-        Profesor,
-        Alumno
-    }
+    
     public abstract class Usuario
     {
         protected int _id;
@@ -32,12 +28,12 @@ namespace BibliotecaEntidades.Entidades
 
         public string Nombre {
             get { return this._nombre; }
-            set { this._nombre = value.ToLower(); }
+            set { this._nombre = value; }
         }
         public string Apellido
         {
             get { return this._apellido; }
-            set { this._apellido = value.ToLower(); }
+            set { this._apellido = value; }
         }
         public int Dni
         {
@@ -53,11 +49,11 @@ namespace BibliotecaEntidades.Entidades
             get { return this._nivelUsuario; }
         }
 
-        public bool ComprobarContrasenia(string contrasenia)
+        public static bool ComprobarContrasenia(Usuario usuario, string contrasenia)
         {
             bool retorno = false;
 
-            if(contrasenia == this._contrasenia)
+            if(usuario._contrasenia == contrasenia)
             {
                 retorno = true;
             }
@@ -74,6 +70,24 @@ namespace BibliotecaEntidades.Entidades
             sb.AppendLine($"Nombre: {this._nombre}");
 
             return sb.ToString();
+        }
+
+
+        public static bool operator ==(Usuario a1, Usuario a2)
+        {
+            bool retorno = false;
+
+            if(a1.Dni == a2.Dni)
+            {
+                retorno = true;
+            }
+
+            return retorno;
+        }
+
+        public static bool operator !=(Usuario a1, Usuario a2)
+        {          
+            return !(a1 == a2);
         }
     }
 }

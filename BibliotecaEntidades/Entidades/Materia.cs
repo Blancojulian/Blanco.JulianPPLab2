@@ -6,12 +6,7 @@ using System.Threading.Tasks;
 
 namespace BibliotecaEntidades.Entidades
 {
-    public enum EstadoAlumno
-    {
-        Regular,
-        Libre,
-        Aprobado
-    }
+
     public class Materia
     {
         private int _codigoMateria;
@@ -19,30 +14,60 @@ namespace BibliotecaEntidades.Entidades
         private string _cuatrimestre;
         private List<Profesor> _profesores;
         private Dictionary<Alumno, EstadoAlumno> _alumnos;
+        private List<Examen> _examenes;
         private int _materiaCorrelativa;
 
-        public Materia(string nombre, string cuatrimestre, int materiaCorrelativa)
+        public Materia(int codigoMateria, string nombre, string cuatrimestre, int materiaCorrelativa)
         {
+            if(codigoMateria < 0)
+            {
+                codigoMateria = 1;
+            }
+            this._codigoMateria = codigoMateria;
             this._nombre = nombre.ToLower();
             this._cuatrimestre = cuatrimestre.ToLower();
             this._materiaCorrelativa = materiaCorrelativa;
             this._profesores = new List<Profesor>();
             this._alumnos = new Dictionary<Alumno, EstadoAlumno>();
+            this._examenes = new List<Examen>();
         }
 
-        public Materia(string nombre, string cuatrimestre) : this(nombre, cuatrimestre, 0)
+        public Materia(int codigoMateria, string nombre, string cuatrimestre) : this(codigoMateria, nombre, cuatrimestre, 0)
         {
         }
-
-        public Materia(string nombre, string cuatrimestre, Profesor profesor) : this(nombre, cuatrimestre)
+        
+        public static bool operator ==(Materia m1, Materia m2)
         {
-            this._profesores.Add(profesor);
+            bool retorno = false;
+
+            if(m1.CodigoMateria == m2.CodigoMateria)
+            {
+                retorno = true;
+            }
+
+            return retorno;
+        }
+
+        public static bool operator !=(Materia m1, Materia m2)
+        {
+            return !(m1 == m2);
         }
 
 
         public static bool operator ==(Materia m, Alumno a)
         {
-            return m._alumnos.ContainsKey(a);
+            bool retorno = false;
+
+            foreach (KeyValuePair<Alumno, EstadoAlumno> alumno in m._alumnos)
+            {
+                if (alumno.Key == a)
+                {
+                    retorno = true;
+                    break;
+                }
+            }
+
+            return retorno;
         }
 
         public static bool operator !=(Materia m, Alumno a)
@@ -52,37 +77,150 @@ namespace BibliotecaEntidades.Entidades
 
         public static bool operator +(Materia m, Alumno a)
         {
+            bool retorno = false;
+
             if (m != a)
             {
-                //cambiar 1 a EstadoAlumno.Regular
-                m._alumnos.Add(a, EstadoAlumno.Regular);
-                return true;
+                
+                    if (m.MateriaCorrelativa == 0 || a == m.MateriaCorrelativa)
+                    {
+                        m._alumnos.Add(a, new EstadoAlumno());
+                        retorno = true;
+                    }
+                
             }
 
-            return false;
+            return retorno;
         }
-        public static string GetEstadoAlumno(Materia m, Alumno a)
+
+        public static bool operator ==(Materia m, Profesor p)
         {
-            string estado = "";
-            EstadoAlumno nivelUsuario;
+            bool retorno = false;
+
+            foreach( Profesor profesor in m._profesores)
+            {
+                if(profesor == p)
+                {
+                    retorno = true;
+                    break;
+                }
+            }
+
+            return retorno;
+        }
+
+        public static bool operator !=(Materia m, Profesor p)
+        {
+            return !(m == p);
+        }
+
+        public static bool operator +(Materia m, Profesor p)
+        {
+            bool retorno = false;
+
+            if (m != p && p + m)
+            {
+                m._profesores.Add(p);
+                retorno = true;
+            }
+
+            return retorno;
+        }
+
+        public static bool operator ==(Materia m, Examen e)
+        {
+            bool retorno = false;
+
+            foreach (Examen examen in m._examenes)
+            {
+                if (examen == e)
+                {
+                    retorno = true;
+                    break;
+                }
+            }
+
+            return retorno;
+        }
+
+        public static bool operator !=(Materia m, Examen e)
+        {
+            return !(m == e);
+        }
+
+        public static bool operator +(Materia m, Examen e)
+        {
+            bool retorno = false;
+
+            if (m != e)
+            {
+                m._examenes.Add(e);
+                retorno = true;
+            }
+
+            return retorno;
+        }
+        public static bool DarNota(Materia m, Profesor p, Alumno a, Examen e, int nota)
+        {
+            bool retorno = false;
+
+            if (m == p)
+            {
+                foreach (Examen examen in m._examenes)
+                {
+                    if (examen == e)
+                    {
+                        retorno = Examen.DarNota(e, a, nota);
+                        break;
+                    }
+                }
+            }
+            
+
+            return retorno;
+        }
+        public static bool DarAsistencia(Materia m, Alumno a)
+        {
+            bool retorno = false;
 
             foreach (KeyValuePair<Alumno, EstadoAlumno> alumno in m._alumnos)
             {
-                if(alumno.Key.Id == a.Id)
+                if (alumno.Key == a)
                 {
-                    nivelUsuario = alumno.Value;
+                    alumno.Value.Asistencia = true;
+                    retorno = true;
+                    break;
+                }
+            }
 
-                    if (nivelUsuario == EstadoAlumno.Regular)
-                    {
-                        estado = "regular";
-                    } else if (nivelUsuario == EstadoAlumno.Libre)
-                    {
-                        estado = "libre";
-                    } else if (nivelUsuario == EstadoAlumno.Aprobado)
-                    {
-                        estado = "aprobado";
-                    }
+            return retorno;
+        }
 
+        public static EstadoAlumno? GetEstado(Materia m, Alumno a)
+        {
+            
+            EstadoAlumno? estado = null;
+
+            foreach (KeyValuePair<Alumno, EstadoAlumno> alumno in m._alumnos)
+            {
+                if (alumno.Key == a)
+                {
+                    estado = alumno.Value;
+                    break;
+                }
+            }
+
+            return estado;
+        }
+        public static EEstadoMateria GetEstadoMateriaAlumno(Materia m, Alumno a)
+        {
+            EEstadoMateria estado = EEstadoMateria.Cursando;
+
+            foreach (KeyValuePair<Alumno, EstadoAlumno> alumno in m._alumnos)
+            {
+                if (alumno.Key == a)
+                {
+                    estado = alumno.Value.EstadoMateria;
                     break;
                 }
             }
@@ -90,6 +228,56 @@ namespace BibliotecaEntidades.Entidades
             return estado;
         }
 
+        public static bool SetEstadoMateriaAlumno(Materia m, Alumno a, EEstadoMateria estado)
+        {
+            bool retorno = false;
+
+            foreach (KeyValuePair<Alumno, EstadoAlumno> alumno in m._alumnos)
+            {
+                if (alumno.Key == a)
+                {
+                    alumno.Value.EstadoMateria = estado;
+                    retorno = true;
+                    break;
+                }
+            }
+
+            return retorno;
+        }
+
+        public static EEstadoAlumno GetEstadoAlumno(Materia m, Alumno a)
+        {
+            //ver
+            EEstadoAlumno estado = EEstadoAlumno.Regular;
+
+            foreach (KeyValuePair<Alumno, EstadoAlumno> alumno in m._alumnos)
+            {
+                if(alumno.Key == a)
+                {
+                    estado = alumno.Value.Estado;
+                    break;
+                }
+            }
+        
+            return estado;
+        }
+
+        public static bool SetEstadoAlumno(Materia m, Alumno a, EEstadoAlumno estado)
+        {
+            bool retorno = false;
+
+            foreach (KeyValuePair<Alumno, EstadoAlumno> alumno in m._alumnos)
+            {
+                if (alumno.Key == a)
+                {
+                    alumno.Value.Estado = estado;
+                    retorno = true;
+                    break;
+                }
+            }
+
+            return retorno;
+        }
         public int CodigoMateria { get { return this._codigoMateria; } }
 
         public int MateriaCorrelativa { get { return this._materiaCorrelativa; } }

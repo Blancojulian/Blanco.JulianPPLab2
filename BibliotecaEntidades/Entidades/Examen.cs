@@ -6,29 +6,88 @@ using System.Threading.Tasks;
 
 namespace BibliotecaEntidades.Entidades
 {
-    internal class Examen
+    public class Examen
     {
         private string _nombre;
         private DateTime _fecha;
-        private Dictionary<int, int> _notasAlumnos;// nota en -1 poque no rindieron el examen
+        private Dictionary<Alumno, Nota> _notasAlumnos;
 
-        public Examen(string nombre, DateTime fecha, Dictionary<Alumno, EstadoAlumno> listaAlumnos)
+        public Examen(string nombre, DateTime fecha)
         {
-            this._nombre = nombre;
+            this._nombre = nombre.ToLower();
             this._fecha = fecha;
-            this._notasAlumnos = new Dictionary<int, int>();
-            this.LoadDictionary(listaAlumnos);
+            this._notasAlumnos = new Dictionary<Alumno, Nota>();
         }
-        private void LoadDictionary(Dictionary<Alumno, EstadoAlumno> listaAlumnos)
-        {
+        
 
-            foreach (KeyValuePair<Alumno, EstadoAlumno> alumno in listaAlumnos)
+        public static bool DarNota(Examen e, Alumno a, int nota)
+        {
+            bool retorno = false;
+
+            foreach (KeyValuePair<Alumno, Nota> alumno in e._notasAlumnos)
             {
-                if(alumno.Value != EstadoAlumno.Aprobado)
+                if (alumno.Key == a)
                 {
-                    this._notasAlumnos.Add(alumno.Key.Id, -1);
+                    alumno.Value.Rendido = true;
+                    alumno.Value.NotaParcial = nota;
+                    retorno = true;
+                    break;
                 }
             }
+
+            return retorno;
+        }
+
+        public static bool operator ==(Examen e1, Examen e2)
+        {
+            bool retorno = false;
+
+            if (e1._nombre == e2._nombre)
+            {
+                retorno = true;
+            }
+
+            return retorno;
+        }
+
+        public static bool operator !=(Examen e1, Examen e2)
+        {
+            return !(e1 == e2);
+        }
+
+        public static bool operator ==(Examen e, Alumno a)
+        {
+            bool retorno = false;
+
+            foreach (KeyValuePair<Alumno, Nota> alumno in e._notasAlumnos)
+            {
+                if (alumno.Key == a)
+                {
+                    retorno = true;
+                    break;
+                }
+            }
+            
+            return retorno;
+        }
+
+        public static bool operator !=(Examen e, Alumno a)
+        {
+            return !(e == a);
+        }
+
+
+        public static bool operator +(Examen e, Alumno a)
+        {
+            bool retorno = false;
+
+            if (e != a)
+            {
+                e._notasAlumnos.Add(a, new Nota());
+                retorno = true;
+            }
+
+            return retorno;
         }
     }
 }

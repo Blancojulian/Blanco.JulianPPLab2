@@ -32,7 +32,7 @@ namespace BibliotecaEntidades.Entidades
 
             foreach (Materia materia in _lista)
             {
-                if (materia.CodigoMateria == m.CodigoMateria)
+                if (materia == m)
                 {
                     retorno = true;
                     break;
@@ -51,6 +51,22 @@ namespace BibliotecaEntidades.Entidades
                 if (materia.CodigoMateria == codigoMateria)
                 {
                     retorno = true;
+                    break;
+                }
+            }
+
+            return retorno;
+        }
+
+        private static Materia GetMateria(int codigoMateria)
+        {
+            Materia retorno = null;
+
+            foreach (Materia materia in _lista)
+            {
+                if (materia.CodigoMateria == codigoMateria)
+                {
+                    retorno = materia;
                     break;
                 }
             }

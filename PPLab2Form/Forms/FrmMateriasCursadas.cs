@@ -11,28 +11,32 @@ using System.Windows.Forms;
 
 namespace PPLab2Form.Forms
 {
-    public partial class FormMateriasCursadas : Form
+    public partial class FrmMateriasCursadas : Form
     {
         private Alumno _alumno;
         private List<Materia> _listaMaterias;
-        public FormMateriasCursadas(Alumno alumno)
+        public FrmMateriasCursadas(Alumno alumno)
         {
             this._alumno = alumno;
             this._listaMaterias = new List<Materia>();
-            this.LoadDataDataGridView();
-            this.lbl_alumno.Text = $"Materias - {this._alumno.Apellido} {this._alumno.Nombre}";
+            
             InitializeComponent();
         }
 
         private void LoadDataDataGridView()
         {
-            this._listaMaterias = Alumno.MostrarMateriasCursadas(this._alumno);
-            string estado = "";
+            this._listaMaterias = this._alumno.Materias;
+            EEstadoAlumno estado;
 
             foreach(Materia materia in _listaMaterias)
             {
-                estado = Materia.GetEstadoAlumno(materia, this._alumno);
-                this.dataGridView1.Rows.Add(materia.CodigoMateria, materia.Nombre, estado);
+                if(materia == this._alumno)
+                {
+                    estado = Materia.GetEstadoAlumno(materia, this._alumno);
+                
+                    this.dataGridView1.Rows.Add(materia.CodigoMateria, materia.Nombre, estado);
+
+                }
 
             }
         }
@@ -48,7 +52,8 @@ namespace PPLab2Form.Forms
 
         private void FormMateriasCursadas_Load(object sender, EventArgs e)
         {
-
+            this.LoadDataDataGridView();
+            this.lbl_alumno.Text = $"Materias - {this._alumno.Apellido} {this._alumno.Nombre}";
         }
     }
 }
