@@ -173,13 +173,16 @@ namespace PPLab2Form.Forms
             }
         }
 
-        private void FrmAdmin_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            Application.Exit();
-        }
+       
 
         private void ConfiguarForm()
         {
+            this.Dock = DockStyle.Fill;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.ControlBox = false;
+            this.ShowIcon = false;
+            this.FormBorderStyle = FormBorderStyle.None;
             this.BackColor = Color.FromArgb(55, 94, 151);
         }
     }

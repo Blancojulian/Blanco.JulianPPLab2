@@ -34,6 +34,7 @@
             this.menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.asignarNotasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.crearExamenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.msi_cerrarSesion = new System.Windows.Forms.ToolStripMenuItem();
             this.btn_asignarNotas = new System.Windows.Forms.Button();
             this.btn_crearExamen = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dtgv_materias)).BeginInit();
@@ -62,7 +63,8 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuToolStripMenuItem});
+            this.menuToolStripMenuItem,
+            this.msi_cerrarSesion});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(800, 24);
@@ -81,14 +83,21 @@
             // asignarNotasToolStripMenuItem
             // 
             this.asignarNotasToolStripMenuItem.Name = "asignarNotasToolStripMenuItem";
-            this.asignarNotasToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.asignarNotasToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.asignarNotasToolStripMenuItem.Text = "Asignar notas";
             // 
             // crearExamenToolStripMenuItem
             // 
             this.crearExamenToolStripMenuItem.Name = "crearExamenToolStripMenuItem";
-            this.crearExamenToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.crearExamenToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.crearExamenToolStripMenuItem.Text = "Crear Examen";
+            // 
+            // msi_cerrarSesion
+            // 
+            this.msi_cerrarSesion.Name = "msi_cerrarSesion";
+            this.msi_cerrarSesion.Size = new System.Drawing.Size(87, 20);
+            this.msi_cerrarSesion.Text = "Cerrar sesión";
+            this.msi_cerrarSesion.Click += new System.EventHandler(this.msi_cerrarSesion_Click);
             // 
             // btn_asignarNotas
             // 
@@ -123,7 +132,6 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "FrmProfesor";
             this.Text = "Profesor";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FrmProfesor_FormClosing);
             this.Load += new System.EventHandler(this.FrmProfesor_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dtgv_materias)).EndInit();
             this.menuStrip1.ResumeLayout(false);
@@ -143,5 +151,6 @@
         private ToolStripMenuItem crearExamenToolStripMenuItem;
         private Button btn_asignarNotas;
         private Button btn_crearExamen;
+        private ToolStripMenuItem msi_cerrarSesion;
     }
 }

@@ -132,13 +132,21 @@ namespace PPLab2Form.Forms
             }
         }
 
-        private void FrmProfesor_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            Application.Exit();
-        }
         private void ConfiguarForm()
         {
+            this.Dock = DockStyle.Fill;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.ControlBox = false;
+            this.ShowIcon = false;
+            this.FormBorderStyle = FormBorderStyle.None;
             this.BackColor = Color.FromArgb(134, 44, 132);
+        }
+
+        private void msi_cerrarSesion_Click(object sender, EventArgs e)
+        {
+            
+            this.Close();
         }
     }
 }

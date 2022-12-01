@@ -36,6 +36,7 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.msi_materiasCursadas = new System.Windows.Forms.ToolStripMenuItem();
             this.msi_inscribirseAMaterias = new System.Windows.Forms.ToolStripMenuItem();
+            this.msi_cerrarSesion = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dtgv_datos)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -98,7 +99,8 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.msi_materiasCursadas,
-            this.msi_inscribirseAMaterias});
+            this.msi_inscribirseAMaterias,
+            this.msi_cerrarSesion});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(843, 24);
@@ -119,6 +121,13 @@
             this.msi_inscribirseAMaterias.Text = "Inscribirse a materias";
             this.msi_inscribirseAMaterias.Click += new System.EventHandler(this.msi_inscribirseAMaterias_Click);
             // 
+            // msi_cerrarSesion
+            // 
+            this.msi_cerrarSesion.Name = "msi_cerrarSesion";
+            this.msi_cerrarSesion.Size = new System.Drawing.Size(87, 20);
+            this.msi_cerrarSesion.Text = "Cerrar sesión";
+            this.msi_cerrarSesion.Click += new System.EventHandler(this.msi_cerrarSesion_Click);
+            // 
             // FrmAlumno
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -133,7 +142,6 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "FrmAlumno";
             this.Text = "Alumno";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormAlumno_FormClosing);
             this.Load += new System.EventHandler(this.FormAlumno_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dtgv_datos)).EndInit();
             this.menuStrip1.ResumeLayout(false);
@@ -155,5 +163,6 @@
         private MenuStrip menuStrip1;
         private ToolStripMenuItem msi_materiasCursadas;
         private ToolStripMenuItem msi_inscribirseAMaterias;
+        private ToolStripMenuItem msi_cerrarSesion;
     }
 }

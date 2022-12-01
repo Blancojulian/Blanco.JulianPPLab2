@@ -26,6 +26,7 @@ namespace PPLab2Form.Forms
         {
             this._alumno = alumno;
             InitializeComponent();
+            this.Dock = DockStyle.Fill;
         }
 
         private void FormAlumno_Load(object sender, EventArgs e)
@@ -34,6 +35,7 @@ namespace PPLab2Form.Forms
             ConfiguarForm();
             ConfigurarDataGrid();
             ConfigurarParaVerMateriasCursadas();
+            dtgv_datos.ClearSelection();
             
         }
 
@@ -42,10 +44,7 @@ namespace PPLab2Form.Forms
 
         }
 
-        private void FormAlumno_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            Application.Exit();
-        }
+       
 
         private void ConfigurarParaInscribirse()
         {
@@ -109,7 +108,6 @@ namespace PPLab2Form.Forms
             dt.Columns.Add("Segundo Parcial");
             dt.Columns.Add("Nota 2");
 
-            //this.dtgv_materias.Columns["CodigoMateria"].HeaderText = "Codigo Materia";
             
 
             foreach (Materia m in materias)
@@ -230,7 +228,17 @@ namespace PPLab2Form.Forms
         }
         private void ConfiguarForm()
         {
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.ControlBox = false;
+            this.ShowIcon = false;
+            this.FormBorderStyle = FormBorderStyle.None;
             this.BackColor = Color.FromArgb(222, 122, 34);
+        }
+
+        private void msi_cerrarSesion_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

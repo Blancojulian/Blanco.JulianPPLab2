@@ -13,6 +13,12 @@ namespace PPLab2Form.Forms
 {
     public partial class FrmLogin : Form
     {
+        private NivelUsuario _nivelUsuario;
+        private Usuario _usuario;
+
+        public NivelUsuario NivelUsuario { get => _nivelUsuario; }
+        public Usuario Usuario { get => _usuario; }
+
         public FrmLogin()
         {
             InitializeComponent();
@@ -33,19 +39,30 @@ namespace PPLab2Form.Forms
                     switch (usuario.NivelUsuario)
                     {
                         case NivelUsuario.Admin:
-                            FrmAdmin frmAAdmin = new FrmAdmin((Admin)usuario);
-                            frmAAdmin.Show();
-                            this.Hide();
+
+
+                            //FrmAdmin frmAAdmin = new FrmAdmin((Admin)usuario);
+                            //frmAAdmin.Show();
+                            //this.Hide();
+                            _nivelUsuario = NivelUsuario.Admin;
+                            _usuario = usuario;
+                            this.Close();
                             break;
                         case NivelUsuario.Profesor:
-                            FrmProfesor frmProfesor = new FrmProfesor((Profesor)usuario);
-                            frmProfesor.Show();
-                            this.Hide();
+                            //FrmProfesor frmProfesor = new FrmProfesor((Profesor)usuario);
+                            //frmProfesor.Show();
+                            //this.Hide();
+                            _nivelUsuario = NivelUsuario.Profesor;
+                            _usuario = usuario;
+                            this.Close();
                             break;
                         case NivelUsuario.Alumno:
-                            FrmAlumno frmAlumno = new FrmAlumno((Alumno)usuario);
-                            frmAlumno.Show();
-                            this.Hide();
+                            //FrmAlumno frmAlumno = new FrmAlumno((Alumno)usuario);
+                            //frmAlumno.Show();
+                            //this.Hide();
+                            _nivelUsuario = NivelUsuario.Alumno;
+                            _usuario = usuario;
+                            this.Close();
                             break;
                         default:
                             break;
@@ -113,6 +130,11 @@ namespace PPLab2Form.Forms
 
         private void ConfiguarForm()
         {
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.ControlBox = false;
+            this.ShowIcon = false;
+            this.FormBorderStyle = FormBorderStyle.None;
             this.BackColor = Color.FromArgb(255,255,255);
         }
     }
