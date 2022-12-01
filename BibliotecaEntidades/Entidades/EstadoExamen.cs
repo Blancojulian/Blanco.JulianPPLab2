@@ -6,27 +6,35 @@ using System.Threading.Tasks;
 
 namespace BibliotecaEntidades.Entidades
 {
-    public class Nota
+    public class EstadoExamen
     {
+        private Examen? _examen;
         private int _nota;
         private bool _rendido;
 
-        public Nota()
+        public EstadoExamen(Examen examen, int nota, bool rendido)
         {
-            this._nota = 0;
-            this._rendido = false;
+            _examen = examen;
+            _nota = nota;
+            _rendido = rendido;
+        }
+        public EstadoExamen(Examen examen) : this(examen, 0, false)
+        {
+            _examen = examen;
         }
 
-        public int NotaParcial { 
+
+        public int Nota
+        {
             get { return this._nota; }
             set
             {
-                if (value < 1 || value >10)
+                if (value < 1 || value > 10)
                 {
-                    value = 1;
+                    value = 0;
                 }
                 this._nota = value;
-            } 
+            }
         }
 
         public bool Rendido
@@ -41,5 +49,7 @@ namespace BibliotecaEntidades.Entidades
                 this._rendido = value;
             }
         }
+
+        public Examen? Examen { get => _examen; set => _examen ??= value; }
     }
 }

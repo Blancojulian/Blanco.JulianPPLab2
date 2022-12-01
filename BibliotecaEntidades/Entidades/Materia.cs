@@ -11,13 +11,15 @@ namespace BibliotecaEntidades.Entidades
     {
         private int _codigoMateria;
         private string _nombre;
-        private string _cuatrimestre;
+        private ECuatrimestre _cuatrimestre;
         private List<Profesor> _profesores;
         private Dictionary<Alumno, EstadoAlumno> _alumnos;
         private List<Examen> _examenes;
+        private Examen? _primerExamen;
+        private Examen? _segundoExamen;
         private int _materiaCorrelativa;
 
-        public Materia(int codigoMateria, string nombre, string cuatrimestre, int materiaCorrelativa)
+        public Materia(int codigoMateria, string nombre, ECuatrimestre cuatrimestre, int materiaCorrelativa)
         {
             if(codigoMateria < 0)
             {
@@ -25,17 +27,18 @@ namespace BibliotecaEntidades.Entidades
             }
             this._codigoMateria = codigoMateria;
             this._nombre = nombre.ToLower();
-            this._cuatrimestre = cuatrimestre.ToLower();
+            this._cuatrimestre = cuatrimestre;
             this._materiaCorrelativa = materiaCorrelativa;
             this._profesores = new List<Profesor>();
             this._alumnos = new Dictionary<Alumno, EstadoAlumno>();
             this._examenes = new List<Examen>();
         }
 
-        public Materia(int codigoMateria, string nombre, string cuatrimestre) : this(codigoMateria, nombre, cuatrimestre, 0)
+        public Materia(int codigoMateria, string nombre, ECuatrimestre cuatrimestre) : this(codigoMateria, nombre, cuatrimestre, 0)
         {
         }
-        
+
+        #region SOBRECARGA OPERADORES
         public static bool operator ==(Materia m1, Materia m2)
         {
             bool retorno = false;
@@ -51,6 +54,23 @@ namespace BibliotecaEntidades.Entidades
         public static bool operator !=(Materia m1, Materia m2)
         {
             return !(m1 == m2);
+        }
+
+        public static bool operator ==(Materia m, int codigoMateria)
+        {
+            bool retorno = false;
+
+            if (m.CodigoMateria == codigoMateria)
+            {
+                retorno = true;
+            }
+
+            return retorno;
+        }
+
+        public static bool operator !=(Materia m, int codigoMateria)
+        {
+            return !(m == codigoMateria);
         }
 
 
@@ -74,7 +94,7 @@ namespace BibliotecaEntidades.Entidades
         {
             return !(m == a);
         }
-
+        
         public static bool operator +(Materia m, Alumno a)
         {
             bool retorno = false;
@@ -84,7 +104,7 @@ namespace BibliotecaEntidades.Entidades
                 
                     if (m.MateriaCorrelativa == 0 || a == m.MateriaCorrelativa)
                     {
-                        m._alumnos.Add(a, new EstadoAlumno());
+                        m._alumnos.Add(a, new EstadoAlumno(m.PrimerExamen, m.SegundoExamen));
                         retorno = true;
                     }
                 
@@ -160,17 +180,33 @@ namespace BibliotecaEntidades.Entidades
 
             return retorno;
         }
-        public static bool DarNota(Materia m, Profesor p, Alumno a, Examen e, int nota)
+        #endregion
+
+        public void AgregarExamenAAlumnos(Examen examen, EExanen eExamen)
+        {
+            foreach (var alumno in _alumnos)
+            {
+                if (eExamen == EExanen.Primer)
+                {
+                    alumno.Value.PrimerExamen.Examen = examen;
+                }
+                else if (eExamen == EExanen.Segundo)
+                {
+                    alumno.Value.SegundoExamen.Examen = examen;
+                }
+            }
+        }
+        public static bool DarNota(Materia m, Profesor p, Alumno a, EExanen examen, int nota)
         {
             bool retorno = false;
 
             if (m == p)
             {
-                foreach (Examen examen in m._examenes)
+                foreach (KeyValuePair<Alumno, EstadoAlumno> alumno in m._alumnos)
                 {
-                    if (examen == e)
+                    if (alumno.Key == a )
                     {
-                        retorno = Examen.DarNota(e, a, nota);
+                        retorno = m.CambiarNota(alumno.Key, alumno.Value, examen, nota);
                         break;
                     }
                 }
@@ -178,6 +214,54 @@ namespace BibliotecaEntidades.Entidades
             
 
             return retorno;
+        }
+
+        private bool CambiarNota(Alumno alumno, EstadoAlumno estado, EExanen tipoExamen, int nota)
+        {
+            bool retorno = false;
+            bool notaValida = nota > 0 && nota <= 10;
+
+            if (notaValida && tipoExamen == EExanen.Primer &&
+                estado.PrimerExamen.Examen is not null)
+            {
+                estado.PrimerExamen.Nota = nota;
+                estado.PrimerExamen.Rendido = true;
+                retorno = true;
+
+            }
+            else if (notaValida && tipoExamen == EExanen.Segundo &&
+                estado.PrimerExamen.Rendido &&
+                estado.SegundoExamen.Examen is not null)
+            {
+                estado.SegundoExamen.Nota = nota;
+                estado.SegundoExamen.Rendido = true;
+                CalcularNotaMateria(alumno, estado);
+                retorno = true;
+
+            }
+            return retorno;
+        }
+
+        private void CalcularNotaMateria(Alumno alumno, EstadoAlumno estado)
+        {
+            bool boolean = estado.Estado == EEstadoAlumno.Regular;
+            if (boolean && estado.PrimerExamen.Nota > 6 &&
+                estado.SegundoExamen.Nota > 6)
+
+            {
+                estado.EstadoMateria = EEstadoMateria.Aprobado;
+                alumno.RestarCantidadMateriaCursada();
+
+            }
+            else if(boolean && (estado.PrimerExamen.Nota <= 6 ||
+                estado.SegundoExamen.Nota <= 6) )
+            {
+                estado.EstadoMateria = EEstadoMateria.Desaprobado;
+                alumno.RestarCantidadMateriaCursada();
+
+            }
+
+
         }
         public static bool DarAsistencia(Materia m, Alumno a)
         {
@@ -280,12 +364,82 @@ namespace BibliotecaEntidades.Entidades
         }
         public int CodigoMateria { get { return this._codigoMateria; } }
 
-        public int MateriaCorrelativa { get { return this._materiaCorrelativa; } }
+        public int MateriaCorrelativa {get { return this._materiaCorrelativa; } }
 
-        public string Nombre { get { return this._nombre; } }
+        public string Nombre { get { return this._nombre; } set => _nombre = value; }
 
-        public string Cuatrimestre { get { return this._cuatrimestre; } }
+        public ECuatrimestre Cuatrimestre { get { return this._cuatrimestre; } }
+        public string MostrarMateriaCorrelativa { 
+            get
+            {
+                string retorno = "No tiene materia correlativa";
+                Materia? m;
+
+                if (MateriaCorrelativa > 0 && (m = Sistema.Materias.Get(MateriaCorrelativa)) is not null)
+                {
+                    retorno = m.Nombre;
+                }
+
+                return retorno;
+            }
+        }
+        public string Alumnos {
+            get
+            {
+                StringBuilder sb = new StringBuilder();
+
+                
+                for (int i = 0; i < _alumnos.Count; i++)
+                {
+                    if (_alumnos.Count - 1 == i)
+                    {
+                        sb.Append($"{_alumnos.ElementAt(i).Key.ToString()}.");
+                    }
+                    else
+                    {
+                        sb.Append($"{_alumnos.ElementAt(i).Key.ToString()}, ");
+                    }
+                }
+                
+                if ( string.IsNullOrEmpty( sb.ToString() ) )
+                {
+                    sb.Append("No tiene alumnos inscriptos");
+                }
+
+                return sb.ToString();
+            }
+        }
+
+        public string Profesores
+        {
+            get
+            {
+                StringBuilder sb = new StringBuilder();
 
 
+                for (int i = 0; i < _profesores.Count; i++)
+                {
+                    if (_profesores.Count - 1 == i)
+                    {
+                        sb.Append($"{_profesores.ElementAt(i).ToString()}.");
+                    }
+                    else
+                    {
+                        sb.Append($"{_profesores.ElementAt(i).ToString()}, ");
+                    }
+                }
+
+                if (string.IsNullOrEmpty(sb.ToString()))
+                {
+                    sb.Append("No tiene profesores asigandos");
+                }
+
+                return sb.ToString();
+            }
+        }
+
+        public Dictionary<Alumno, EstadoAlumno> ListaAlumnos { get => new Dictionary<Alumno, EstadoAlumno>(_alumnos); }
+        public Examen? PrimerExamen { get => _primerExamen; set => _primerExamen = value; }
+        public Examen? SegundoExamen { get => _segundoExamen; set => _segundoExamen = value; }
     }
 }

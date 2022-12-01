@@ -32,13 +32,13 @@
             this.lbl_codigo = new System.Windows.Forms.Label();
             this.tbx_codigo = new System.Windows.Forms.TextBox();
             this.lbl_cuatrimestre = new System.Windows.Forms.Label();
-            this.tbx_cuatrimestre = new System.Windows.Forms.TextBox();
             this.lbl_nombre = new System.Windows.Forms.Label();
             this.tbx_nombre = new System.Windows.Forms.TextBox();
             this.cbx_materiaCorrelativa = new System.Windows.Forms.ComboBox();
             this.chbx_materiaCorrelativa = new System.Windows.Forms.CheckBox();
             this.btn_confirmar = new System.Windows.Forms.Button();
             this.btn_cancelar = new System.Windows.Forms.Button();
+            this.cbx_cuatrimestre = new System.Windows.Forms.ComboBox();
             this.SuspendLayout();
             // 
             // lbl_materiaCorrelativa
@@ -79,14 +79,6 @@
             this.lbl_cuatrimestre.TabIndex = 16;
             this.lbl_cuatrimestre.Text = "Cuatrimestre";
             // 
-            // tbx_cuatrimestre
-            // 
-            this.tbx_cuatrimestre.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.tbx_cuatrimestre.Location = new System.Drawing.Point(447, 94);
-            this.tbx_cuatrimestre.Name = "tbx_cuatrimestre";
-            this.tbx_cuatrimestre.Size = new System.Drawing.Size(121, 25);
-            this.tbx_cuatrimestre.TabIndex = 15;
-            // 
             // lbl_nombre
             // 
             this.lbl_nombre.AutoSize = true;
@@ -112,6 +104,7 @@
             this.cbx_materiaCorrelativa.Name = "cbx_materiaCorrelativa";
             this.cbx_materiaCorrelativa.Size = new System.Drawing.Size(121, 23);
             this.cbx_materiaCorrelativa.TabIndex = 12;
+            this.cbx_materiaCorrelativa.SelectedIndexChanged += new System.EventHandler(this.cbx_materiaCorrelativa_SelectedIndexChanged);
             // 
             // chbx_materiaCorrelativa
             // 
@@ -147,11 +140,20 @@
             this.btn_cancelar.UseVisualStyleBackColor = true;
             this.btn_cancelar.Click += new System.EventHandler(this.btn_cancelar_Click);
             // 
+            // cbx_cuatrimestre
+            // 
+            this.cbx_cuatrimestre.FormattingEnabled = true;
+            this.cbx_cuatrimestre.Location = new System.Drawing.Point(447, 96);
+            this.cbx_cuatrimestre.Name = "cbx_cuatrimestre";
+            this.cbx_cuatrimestre.Size = new System.Drawing.Size(121, 23);
+            this.cbx_cuatrimestre.TabIndex = 25;
+            // 
             // FrmCrearMateria
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(643, 340);
+            this.Controls.Add(this.cbx_cuatrimestre);
             this.Controls.Add(this.btn_cancelar);
             this.Controls.Add(this.btn_confirmar);
             this.Controls.Add(this.chbx_materiaCorrelativa);
@@ -159,7 +161,6 @@
             this.Controls.Add(this.lbl_codigo);
             this.Controls.Add(this.tbx_codigo);
             this.Controls.Add(this.lbl_cuatrimestre);
-            this.Controls.Add(this.tbx_cuatrimestre);
             this.Controls.Add(this.lbl_nombre);
             this.Controls.Add(this.tbx_nombre);
             this.Controls.Add(this.cbx_materiaCorrelativa);
@@ -177,12 +178,12 @@
         private Label lbl_codigo;
         private TextBox tbx_codigo;
         private Label lbl_cuatrimestre;
-        private TextBox tbx_cuatrimestre;
         private Label lbl_nombre;
         private TextBox tbx_nombre;
         private ComboBox cbx_materiaCorrelativa;
         private CheckBox chbx_materiaCorrelativa;
         private Button btn_confirmar;
         private Button btn_cancelar;
+        private ComboBox cbx_cuatrimestre;
     }
 }

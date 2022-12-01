@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,101 +7,75 @@ using System.Threading.Tasks;
 
 namespace BibliotecaEntidades.Entidades
 {
-    public static class ListaUsuarios
+    public class ListaUsuarios : Lista<Usuario>
     {
-        public static List<Usuario>_lista;
-        private static int _id;
-
-        static ListaUsuarios()
+        public ListaUsuarios() : base()
         {
-            _id = 0;
-            _lista = new List<Usuario>();
-            AgregarUsuario(new Alumno("Juan", "Doe", "asd123", 1234));
-            AgregarUsuario(new Alumno("Juan", "esteban", "AAA111", 2222));
-
-            Admin admin1 = new Admin("Jose", "Admin", "1111", 1111);
-            AgregarUsuario(admin1);
-
-
-            //Materia
-            Materia materia1 = new Materia(10, "Programacion", "primer");
-            admin1.CrearMateria(materia1);
-
-
-
         }
 
-        public static int GetId()
-        {
-            _id++;
-            return _id;
-        }
-
-        private static bool UsuarioExiste(Usuario u)
+        public override bool Existe(Usuario usuario)
         {
             bool retorno = false;
 
-            foreach (Usuario usuario in _lista)
+            foreach (Usuario u in _lista)
             {
-                if(usuario.Dni == u.Dni)
+                if (usuario == u)
                 {
                     retorno = true;
                     break;
                 }
             }
-            
+
             return retorno;
         }
-        
-        public static bool AgregarUsuario(Usuario u)
+
+        public override bool Agregar(Usuario usuario)
         {
             bool retorno = false;
 
-            if (!UsuarioExiste(u))
+            if (!Existe(usuario))
             {
-                _lista.Add(u);
+                _lista.Add(usuario);
                 retorno = true;
             }
 
             return retorno;
         }
 
-        public static bool EliminarUsuario(Usuario u)
+        public override bool Eliminar(Usuario usuario)
         {
             bool retorno = false;
 
-            if (UsuarioExiste(u))
+            if (Existe(usuario))
             {
-                _lista.Remove(u);
+                _lista.Remove(usuario);
                 retorno = true;
             }
 
             return retorno;
         }
 
-        public static Usuario ComprobarLogin(string nombre, string contrasenia, int dni)
+        public override bool Eliminar(int dni)
         {
-            
-            foreach(Usuario usuario in _lista)
-            {
-                if(usuario.Nombre == nombre && usuario.Dni == dni && 
-                    Usuario.ComprobarContrasenia(usuario, contrasenia))
-                {
-                    return usuario;
-                }
-            }
-            
+            bool retorno = false;
 
-            return null;
+            Usuario? usuario = Get(dni);
+
+            if(usuario is not null)
+            {
+                _lista.Remove(usuario);
+            }
+
+            return retorno;
         }
 
-        public static Usuario GetUsuario(int dni)
+        public override Usuario? Get(int dni)
         {
-            Usuario usuario = null;
+            Usuario? usuario = null;
 
             foreach (Usuario u in _lista)
             {
-                if (u.Dni == dni)
+                if (u == dni)
                 {
                     usuario = u;
                     break;
@@ -110,13 +85,29 @@ namespace BibliotecaEntidades.Entidades
             return usuario;
         }
 
-        public static List<Profesor> ListaProfesores
+        public Usuario? ComprobarLogin(string nombre, string contrasenia, int dni)
         {
-            get 
-            {
-                List<Profesor> listaProfesores = new List<Profesor> ();
+            Usuario? usuario = null;
 
-                foreach(Usuario usuario in _lista)
+            foreach (Usuario u in _lista)
+            {
+                if (u.Nombre == nombre && u.Dni == dni &&
+                    Usuario.ComprobarContrasenia(u, contrasenia))
+                {
+                    usuario = u;
+                }
+            }
+
+            return usuario;
+        }
+
+        public List<Profesor> ListaProfesores
+        {
+            get
+            {
+                List<Profesor> listaProfesores = new List<Profesor>();
+
+                foreach (Usuario usuario in _lista)
                 {
                     if (usuario.NivelUsuario == NivelUsuario.Profesor)
                     {
@@ -126,8 +117,7 @@ namespace BibliotecaEntidades.Entidades
                 }
 
                 return listaProfesores;
-            } 
+            }
         }
-
     }
 }

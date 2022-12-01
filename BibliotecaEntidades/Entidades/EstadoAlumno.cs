@@ -12,8 +12,10 @@ namespace BibliotecaEntidades.Entidades
         private EEstadoMateria _estadoMateria;
         private bool _asistencia;
         private EEstadoAlumno _estadoAlumno;
+        private EstadoExamen _primerExamen;
+        private EstadoExamen _segundoExamen;
 
-        public EstadoAlumno(EEstadoMateria estadoMateria, bool asistencia, EEstadoAlumno estadoAlumno)
+        private EstadoAlumno(EEstadoMateria estadoMateria, bool asistencia, EEstadoAlumno estadoAlumno)
         {
             this._estadoMateria = estadoMateria;
             this._asistencia = asistencia;
@@ -22,6 +24,13 @@ namespace BibliotecaEntidades.Entidades
 
         public EstadoAlumno() : this(EEstadoMateria.Cursando, false, EEstadoAlumno.Regular)
         {
+
+        }
+
+        public EstadoAlumno(Examen primerExamen, Examen segundoExamen) : this(EEstadoMateria.Cursando, false, EEstadoAlumno.Regular)
+        {
+            _primerExamen = new EstadoExamen(primerExamen);
+            _segundoExamen = new EstadoExamen(segundoExamen);
 
         }
 
@@ -49,5 +58,8 @@ namespace BibliotecaEntidades.Entidades
             get { return this._asistencia; }
             set { this._asistencia = value; }
         }
+
+        public EstadoExamen PrimerExamen { get => _primerExamen; set => _primerExamen ??= value; }
+        public EstadoExamen SegundoExamen { get => _segundoExamen; set => _segundoExamen ??= value; }
     }
 }

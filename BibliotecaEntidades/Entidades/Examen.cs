@@ -10,34 +10,20 @@ namespace BibliotecaEntidades.Entidades
     {
         private string _nombre;
         private DateTime _fecha;
-        private Dictionary<Alumno, Nota> _notasAlumnos;
+        private int _nota;
+        private bool _rendido;
 
         public Examen(string nombre, DateTime fecha)
         {
-            this._nombre = nombre.ToLower();
-            this._fecha = fecha;
-            this._notasAlumnos = new Dictionary<Alumno, Nota>();
-        }
-        
-
-        public static bool DarNota(Examen e, Alumno a, int nota)
+            _nombre = nombre.ToLower();
+            _fecha = fecha;
+        }/*
+        public Examen(string nombre, DateTime fecha) : this(0, nombre, fecha)
         {
-            bool retorno = false;
 
-            foreach (KeyValuePair<Alumno, Nota> alumno in e._notasAlumnos)
-            {
-                if (alumno.Key == a)
-                {
-                    alumno.Value.Rendido = true;
-                    alumno.Value.NotaParcial = nota;
-                    retorno = true;
-                    break;
-                }
-            }
+        }*/
 
-            return retorno;
-        }
-
+                
         public static bool operator ==(Examen e1, Examen e2)
         {
             bool retorno = false;
@@ -55,39 +41,7 @@ namespace BibliotecaEntidades.Entidades
             return !(e1 == e2);
         }
 
-        public static bool operator ==(Examen e, Alumno a)
-        {
-            bool retorno = false;
-
-            foreach (KeyValuePair<Alumno, Nota> alumno in e._notasAlumnos)
-            {
-                if (alumno.Key == a)
-                {
-                    retorno = true;
-                    break;
-                }
-            }
-            
-            return retorno;
-        }
-
-        public static bool operator !=(Examen e, Alumno a)
-        {
-            return !(e == a);
-        }
-
-
-        public static bool operator +(Examen e, Alumno a)
-        {
-            bool retorno = false;
-
-            if (e != a)
-            {
-                e._notasAlumnos.Add(a, new Nota());
-                retorno = true;
-            }
-
-            return retorno;
-        }
+        public string Nombre { get => _nombre; set => _nombre = value; }
+        public DateTime Fecha { get => _fecha; set => _fecha = value; }
     }
 }

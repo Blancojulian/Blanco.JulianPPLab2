@@ -15,36 +15,36 @@ namespace BibliotecaEntidades.Entidades
 
         public bool CrearUsuario(Usuario usuario)
         {
-            return ListaUsuarios.AgregarUsuario(usuario);
+            return Sistema.Usuarios.Agregar(usuario);
         }
         public bool CrearAlumno(string nombre, string apellido, string contrasenia, int dni)
         {
-            return ListaUsuarios.AgregarUsuario( new Alumno(nombre, apellido, contrasenia, dni) );
+            return Sistema.Usuarios.Agregar( new Alumno(nombre, apellido, contrasenia, dni) );
         }
 
         public bool CrearProfesor(string nombre, string apellido, string contrasenia, int dni)
         {
-            return ListaUsuarios.AgregarUsuario( new Profesor(nombre, apellido, contrasenia, dni) );
+            return Sistema.Usuarios.Agregar( new Profesor(nombre, apellido, contrasenia, dni) );
         }
 
         public bool CrearAdmin(string nombre, string apellido, string contrasenia, int dni)
         {
-            return ListaUsuarios.AgregarUsuario( new Admin(nombre, apellido, contrasenia, dni) );
+            return Sistema.Usuarios.Agregar( new Admin(nombre, apellido, contrasenia, dni) );
         }
 
-        public bool CrearMateria(int codigoMateria, string nombre, string cuatrimestre)
+        public bool CrearMateria(int codigoMateria, string nombre, ECuatrimestre cuatrimestre)
         {
-            return ListaMaterias.AgregarMateria(new Materia(codigoMateria, nombre, cuatrimestre));
+            return Sistema.Materias.Agregar(new Materia(codigoMateria, nombre, cuatrimestre));
         }
 
         public bool CrearMateria(Materia materia)
         {
-            return ListaMaterias.AgregarMateria(materia);
+            return Sistema.Materias.Agregar(materia);
         }
 
-        public bool CrearMateria(int codigoMateria, string nombre, string cuatrimestre, int materiaCorrelativa)
+        public bool CrearMateria(int codigoMateria, string nombre, ECuatrimestre cuatrimestre, int materiaCorrelativa)
         {
-            return ListaMaterias.AgregarMateria( new Materia(codigoMateria, nombre, cuatrimestre, materiaCorrelativa) );
+            return Sistema.Materias.Agregar( new Materia(codigoMateria, nombre, cuatrimestre, materiaCorrelativa) );
         }
 
         public bool AgregarProfesorAMateria(Materia materia, Profesor profesor)

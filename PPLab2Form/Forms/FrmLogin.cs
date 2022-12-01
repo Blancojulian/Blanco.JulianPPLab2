@@ -18,10 +18,6 @@ namespace PPLab2Form.Forms
             InitializeComponent();
         }
 
-        private void login_lbl_1_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void login_btn_aceptar_Click(object sender, EventArgs e)
         {
@@ -29,17 +25,36 @@ namespace PPLab2Form.Forms
             
             if(int.TryParse(this.tbx_dni.Text, out dni))
             {
-                Alumno usuario = (Alumno)ListaUsuarios.ComprobarLogin(this.tbx_nombre.Text, this.tbx_contrasenia.Text, dni);
-                Alumno usuario2 = (Alumno)ListaUsuarios._lista[0];
+                Usuario? usuario = Sistema.Usuarios.ComprobarLogin(this.tbx_nombre.Text, this.tbx_contrasenia.Text, dni);
+                
                 if (usuario is not null)
                 {
-                    if(usuario.NivelUsuario == NivelUsuario.Alumno)
+                    
+                    switch (usuario.NivelUsuario)
                     {
-                        this.tbx_nombre.Text = $"funciona {usuario.Apellido} {usuario.MostrarInformacion()}";
-                        var f = new FrmAlumno(usuario);
-                        f.Show();
-                        this.Hide();
+                        case NivelUsuario.Admin:
+                            FrmAdmin frmAAdmin = new FrmAdmin((Admin)usuario);
+                            frmAAdmin.Show();
+                            this.Hide();
+                            break;
+                        case NivelUsuario.Profesor:
+                            FrmProfesor frmProfesor = new FrmProfesor((Profesor)usuario);
+                            frmProfesor.Show();
+                            this.Hide();
+                            break;
+                        case NivelUsuario.Alumno:
+                            FrmAlumno frmAlumno = new FrmAlumno((Alumno)usuario);
+                            frmAlumno.Show();
+                            this.Hide();
+                            break;
+                        default:
+                            break;
                     }
+                
+                }
+                else
+                {
+                    MessageBox.Show("El usuario no existe");
                 }
             
             }
@@ -55,10 +70,50 @@ namespace PPLab2Form.Forms
             Application.Exit();
         }
 
-        private void FormLogin_Load(object sender, EventArgs e)
+        private void FrmLogin_Load(object sender, EventArgs e)
         {
+            ConfiguarForm();
+            cbx_tipoUsuario.DataSource = Enum.GetValues(typeof(NivelUsuario));
+            cbx_tipoUsuario.SelectedItem = NivelUsuario.Alumno;
+        }
+
+        private void btn_cargarDatos_Click(object sender, EventArgs e)
+        {
+            List<Usuario> listaUsuarios = Sistema.Usuarios.GetLista;
+            List<Usuario> listaPorTipo = new List<Usuario>();
+            Usuario? usuario = null;
+            NivelUsuario nivelUsuario = (NivelUsuario)this.cbx_tipoUsuario.SelectedItem;
+
+            foreach (Usuario u in listaUsuarios)
+            {
+                if (u.NivelUsuario == nivelUsuario)
+                {
+                    listaPorTipo.Add(u);
+                }
+            }
+
+            if (listaPorTipo.Count > 0)
+            {
+                usuario = listaPorTipo[0];
+            }
+            else
+            {
+                MessageBox.Show("No hay cargado usuario de ese tipo");
+            }
+
+            if (usuario is not null)
+            {
+                tbx_nombre.Text = usuario.Nombre;
+                tbx_dni.Text = $"{usuario.Dni}";
+                tbx_contrasenia.Text = Usuario.RecuperarContrasenia(usuario);
+
+            }
 
         }
 
+        private void ConfiguarForm()
+        {
+            this.BackColor = Color.FromArgb(255,255,255);
+        }
     }
 }

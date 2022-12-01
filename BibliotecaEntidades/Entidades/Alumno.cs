@@ -9,13 +9,13 @@ namespace BibliotecaEntidades.Entidades
 {
     public class Alumno : Usuario
     {
-        private int _cantidadMaterias;
+        private int _cantidadMateriasCursando;
         private List<Materia> _materias;
         
 
         public Alumno(string nombre, string apellido, string contrasenia, int dni) : base(nombre, apellido, contrasenia, dni)
         {
-            this._cantidadMaterias = 0;
+            this._cantidadMateriasCursando = 0;
             this._nivelUsuario = NivelUsuario.Alumno;
             this._materias = new List<Materia>();
         }
@@ -26,20 +26,55 @@ namespace BibliotecaEntidades.Entidades
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine($"Información alumno");
-            sb.AppendLine($"{base.MostrarInformacion()}");
+            sb.Append($"{base.MostrarInformacion()}");
 
             return sb.ToString();
         }
 
+        public override string ToString()
+        {
+            return $"{Apellido} {Nombre}";
+        }
+
         public bool InscribirseAMateria(Materia materia)
         {
-            bool retorno = materia + this;
 
-            if (retorno)
+            bool retorno = false;
+            bool boolean = AgregarCantidadMateriaCursada();
+
+            if (boolean && materia + this)
             {
                 this._materias.Add(materia);
+                retorno = true;
+            }
+            else if (boolean)
+            {
+                RestarCantidadMateriaCursada();
             }
 
+            return retorno;
+        }
+        private bool AgregarCantidadMateriaCursada()
+        {
+            bool retorno = false;
+
+            if (_cantidadMateriasCursando >= 0 && _cantidadMateriasCursando + 1 <= 2)
+            {
+                _cantidadMateriasCursando++;
+                retorno = true;
+            }
+            return retorno;
+        }
+
+        public bool RestarCantidadMateriaCursada()
+        {
+            bool retorno = false;
+
+            if (_cantidadMateriasCursando - 1 >= 0 && _cantidadMateriasCursando <= 2)
+            {
+                _cantidadMateriasCursando--;
+                retorno = true;
+            }
             return retorno;
         }
 
@@ -77,10 +112,12 @@ namespace BibliotecaEntidades.Entidades
         }
 
         public List<Materia> Materias { get { return new List<Materia>(this._materias); } }
+
+        public int CantidadMateriasCursando { get => _cantidadMateriasCursando; }
         /*
-        public static implicit operator Alumno(string nombre, string apellido, string contrasenia, int dni)
-        {
-            return new Alumno(nombre, apellido, contrasenia, dni);
-        }*/
+public static implicit operator Alumno(string nombre, string apellido, string contrasenia, int dni)
+{
+return new Alumno(nombre, apellido, contrasenia, dni);
+}*/
     }
 }

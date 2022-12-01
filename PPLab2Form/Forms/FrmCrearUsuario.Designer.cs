@@ -174,7 +174,7 @@
             this.Controls.Add(this.tbx_nombre);
             this.Controls.Add(this.cbx_tipoUsuario);
             this.Name = "FrmCrearUsuario";
-            this.Text = "FrmCrearUsuario";
+            this.Text = "Crear Usuario";
             this.Load += new System.EventHandler(this.FrmCrearUsuario_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

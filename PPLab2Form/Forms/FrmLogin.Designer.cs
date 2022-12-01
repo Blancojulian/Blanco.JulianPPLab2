@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.login_lbl_1 = new System.Windows.Forms.Label();
+            this.lbl_inicio = new System.Windows.Forms.Label();
             this.lbl_nombre = new System.Windows.Forms.Label();
             this.lbl_contrasenia = new System.Windows.Forms.Label();
             this.tbx_nombre = new System.Windows.Forms.TextBox();
@@ -37,18 +37,20 @@
             this.login_btn_cancelar = new System.Windows.Forms.Button();
             this.tbx_dni = new System.Windows.Forms.TextBox();
             this.lbl_dni = new System.Windows.Forms.Label();
+            this.lbl_completarDatos = new System.Windows.Forms.Label();
+            this.cbx_tipoUsuario = new System.Windows.Forms.ComboBox();
+            this.btn_cargarDatos = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // login_lbl_1
+            // lbl_inicio
             // 
-            this.login_lbl_1.AutoSize = true;
-            this.login_lbl_1.Font = new System.Drawing.Font("Segoe UI", 25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.login_lbl_1.Location = new System.Drawing.Point(306, 26);
-            this.login_lbl_1.Name = "login_lbl_1";
-            this.login_lbl_1.Size = new System.Drawing.Size(185, 46);
-            this.login_lbl_1.TabIndex = 0;
-            this.login_lbl_1.Text = "Bienvenido";
-            this.login_lbl_1.Click += new System.EventHandler(this.login_lbl_1_Click);
+            this.lbl_inicio.AutoSize = true;
+            this.lbl_inicio.Font = new System.Drawing.Font("Segoe UI", 25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lbl_inicio.Location = new System.Drawing.Point(306, 26);
+            this.lbl_inicio.Name = "lbl_inicio";
+            this.lbl_inicio.Size = new System.Drawing.Size(185, 46);
+            this.lbl_inicio.TabIndex = 0;
+            this.lbl_inicio.Text = "Bienvenido";
             // 
             // lbl_nombre
             // 
@@ -124,11 +126,43 @@
             this.lbl_dni.TabIndex = 7;
             this.lbl_dni.Text = "DNI";
             // 
-            // FormLogin
+            // lbl_completarDatos
+            // 
+            this.lbl_completarDatos.AutoSize = true;
+            this.lbl_completarDatos.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lbl_completarDatos.Location = new System.Drawing.Point(600, 98);
+            this.lbl_completarDatos.Name = "lbl_completarDatos";
+            this.lbl_completarDatos.Size = new System.Drawing.Size(151, 25);
+            this.lbl_completarDatos.TabIndex = 9;
+            this.lbl_completarDatos.Text = "Completar datos";
+            // 
+            // cbx_tipoUsuario
+            // 
+            this.cbx_tipoUsuario.FormattingEnabled = true;
+            this.cbx_tipoUsuario.Location = new System.Drawing.Point(600, 152);
+            this.cbx_tipoUsuario.Name = "cbx_tipoUsuario";
+            this.cbx_tipoUsuario.Size = new System.Drawing.Size(151, 23);
+            this.cbx_tipoUsuario.TabIndex = 10;
+            // 
+            // btn_cargarDatos
+            // 
+            this.btn_cargarDatos.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btn_cargarDatos.Location = new System.Drawing.Point(600, 201);
+            this.btn_cargarDatos.Name = "btn_cargarDatos";
+            this.btn_cargarDatos.Size = new System.Drawing.Size(151, 26);
+            this.btn_cargarDatos.TabIndex = 11;
+            this.btn_cargarDatos.Text = "Cargar datos";
+            this.btn_cargarDatos.UseVisualStyleBackColor = true;
+            this.btn_cargarDatos.Click += new System.EventHandler(this.btn_cargarDatos_Click);
+            // 
+            // FrmLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btn_cargarDatos);
+            this.Controls.Add(this.cbx_tipoUsuario);
+            this.Controls.Add(this.lbl_completarDatos);
             this.Controls.Add(this.tbx_dni);
             this.Controls.Add(this.lbl_dni);
             this.Controls.Add(this.login_btn_cancelar);
@@ -137,9 +171,10 @@
             this.Controls.Add(this.tbx_nombre);
             this.Controls.Add(this.lbl_contrasenia);
             this.Controls.Add(this.lbl_nombre);
-            this.Controls.Add(this.login_lbl_1);
-            this.Name = "FormLogin";
-            this.Text = "FormLogin";
+            this.Controls.Add(this.lbl_inicio);
+            this.Name = "FrmLogin";
+            this.Text = "Login";
+            this.Load += new System.EventHandler(this.FrmLogin_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -147,7 +182,7 @@
 
         #endregion
 
-        private Label login_lbl_1;
+        private Label lbl_inicio;
         private Label lbl_nombre;
         private Label lbl_contrasenia;
         private TextBox tbx_nombre;
@@ -156,5 +191,8 @@
         private Button login_btn_cancelar;
         private TextBox tbx_dni;
         private Label lbl_dni;
+        private Label lbl_completarDatos;
+        private ComboBox cbx_tipoUsuario;
+        private Button btn_cargarDatos;
     }
 }

@@ -1,5 +1,6 @@
 ﻿public enum EEstadoMateria
 {
     Cursando,
-    Aprobado
+    Aprobado,
+    Desaprobado
 }

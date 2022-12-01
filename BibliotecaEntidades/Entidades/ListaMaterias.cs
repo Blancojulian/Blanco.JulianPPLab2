@@ -6,27 +6,14 @@ using System.Threading.Tasks;
 
 namespace BibliotecaEntidades.Entidades
 {
-    public static class ListaMaterias
+    public class ListaMaterias : Lista<Materia>
     {
-        private static List<Materia> _lista;
-        private static int _id;
-
-        static ListaMaterias()
+        public ListaMaterias() : base()
         {
-            _id = 0;
-            _lista = new List<Materia>();
 
         }
 
-        public static int GetId()
-        {
-            _id++;
-            return _id;
-        }
-        public static List<Materia> Lista { get { return new List<Materia>(_lista); } }
-
-        
-        private static bool MateriaExiste(Materia m)
+        public override bool Existe(Materia m)
         {
             bool retorno = false;
 
@@ -41,8 +28,8 @@ namespace BibliotecaEntidades.Entidades
 
             return retorno;
         }
-
-        private static bool MateriaExiste(int codigoMateria)
+        /*
+        public override bool Existe(int codigoMateria)
         {
             bool retorno = false;
 
@@ -56,15 +43,15 @@ namespace BibliotecaEntidades.Entidades
             }
 
             return retorno;
-        }
+        }*/
 
-        private static Materia GetMateria(int codigoMateria)
+        public override Materia? Get(int codigoMateria)
         {
-            Materia retorno = null;
+            Materia? retorno = null;
 
             foreach (Materia materia in _lista)
             {
-                if (materia.CodigoMateria == codigoMateria)
+                if (materia == codigoMateria)
                 {
                     retorno = materia;
                     break;
@@ -74,30 +61,47 @@ namespace BibliotecaEntidades.Entidades
             return retorno;
         }
 
-        public static bool AgregarMateria(Materia m)
+        public override bool Agregar(Materia materia)
         {
             bool retorno = false;
 
-            if (!MateriaExiste(m))
+            if (!Existe(materia))
             {
-                _lista.Add(m);
+                _lista.Add(materia);
                 retorno = true;
             }
 
             return retorno;
         }
 
-        public static bool EliminarMateria(Materia m)
+        public override bool Eliminar(Materia materia)
         {
             bool retorno = false;
 
-            if (MateriaExiste(m))
+            if (Existe(materia))
             {
-                _lista.Remove(m);
+                _lista.Remove(materia);
                 retorno = true;
             }
 
             return retorno;
         }
+
+        public override bool Eliminar(int codigoMateria)
+        {
+            bool retorno = false;
+
+            Materia? materia = Get(codigoMateria);
+
+            if (materia is not null)
+            {
+                _lista.Remove(materia);
+                retorno = true;
+            }
+
+            return retorno;
+        }
+
+        //public override List<Materia> Lista { get => new List<Materia>(_lista); }
     }
 }

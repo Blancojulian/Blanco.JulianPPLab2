@@ -10,7 +10,6 @@ namespace BibliotecaEntidades.Entidades
     
     public abstract class Usuario
     {
-        protected int _id;
         protected string _nombre;
         protected string _apellido;
         protected string _contrasenia;
@@ -19,7 +18,6 @@ namespace BibliotecaEntidades.Entidades
 
         public Usuario(string nombre, string apellido, string contrasenia, int dni)
         {
-            this._id = ListaUsuarios.GetId();
             this._nombre = nombre.ToLower();
             this._apellido = apellido.ToLower();
             this._contrasenia = contrasenia;
@@ -39,10 +37,6 @@ namespace BibliotecaEntidades.Entidades
         {
             get { return this._dni; }
             set { this._dni = value; }
-        }
-        public int Id
-        {
-            get { return this._id; }
         }
         public NivelUsuario NivelUsuario
         {
@@ -64,10 +58,9 @@ namespace BibliotecaEntidades.Entidades
         public virtual string MostrarInformacion()
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine($"ID: {this._id}");
-            sb.AppendLine($"DNI: {this._dni}");
             sb.AppendLine($"Apellido: {this._apellido}");
             sb.AppendLine($"Nombre: {this._nombre}");
+            sb.Append($"DNI: {this._dni}");
 
             return sb.ToString();
         }
@@ -88,6 +81,29 @@ namespace BibliotecaEntidades.Entidades
         public static bool operator !=(Usuario a1, Usuario a2)
         {          
             return !(a1 == a2);
+        }
+
+        public static bool operator ==(Usuario a, int dni)
+        {
+            bool retorno = false;
+
+            if (a.Dni == dni)
+            {
+                retorno = true;
+            }
+
+            return retorno;
+        }
+
+        public static bool operator !=(Usuario a, int dni)
+        {
+            return !(a == dni);
+        }
+
+        public static string RecuperarContrasenia(Usuario usuario)
+        {
+            return usuario._contrasenia;
+
         }
     }
 }

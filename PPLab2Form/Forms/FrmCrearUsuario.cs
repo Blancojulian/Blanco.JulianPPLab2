@@ -13,13 +13,11 @@ namespace PPLab2Form.Forms
 {
     public partial class FrmCrearUsuario : Form
     {
-        private Admin _admin;
         private Usuario _usuario;
-        public FrmCrearUsuario(Admin admin)
+        public FrmCrearUsuario()
         {
 
             InitializeComponent();
-            this._admin = admin;
         }
 
         private void FrmCrearUsuario_Load(object sender, EventArgs e)
@@ -28,7 +26,7 @@ namespace PPLab2Form.Forms
             this.cbx_tipoUsuario.DataSource = Enum.GetValues(typeof(NivelUsuario));
             this.cbx_tipoUsuario.SelectedItem = NivelUsuario.Alumno;
 
-
+            ConfiguarForm();
 
 
         }
@@ -81,9 +79,12 @@ namespace PPLab2Form.Forms
             }
             
         }
+        private void ConfiguarForm()
+        {
+            this.BackColor = Color.FromArgb(55, 94, 151);
+        }
 
-        
-        public Usuario Alumno { get { return this._usuario; } }
+        public Usuario Usuario { get { return this._usuario; } }
 
         
 
