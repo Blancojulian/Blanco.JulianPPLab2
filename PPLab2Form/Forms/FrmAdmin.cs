@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -184,6 +185,66 @@ namespace PPLab2Form.Forms
             this.ShowIcon = false;
             this.FormBorderStyle = FormBorderStyle.None;
             this.BackColor = Color.FromArgb(55, 94, 151);
+        }
+
+        private void msi_calcularCantidadDeAlumnos_Click(object sender, EventArgs e)
+        {
+            FrmCantidadAlumnos frm = new FrmCantidadAlumnos();
+            DialogResult respuesta = frm.ShowDialog();
+
+            if (respuesta == DialogResult.OK)
+            {
+
+            }
+            else if (respuesta == DialogResult.Cancel)
+            {
+                MessageBox.Show("Se cancelo la operación");
+            }
+        }
+
+        private void msi_calcularLaNotaPromedio_Click(object sender, EventArgs e)
+        {
+            FrmPromedioNotas frm = new FrmPromedioNotas();
+            DialogResult respuesta = frm.ShowDialog();
+
+            if (respuesta == DialogResult.OK)
+            {
+
+            }
+            else if (respuesta == DialogResult.Cancel)
+            {
+                MessageBox.Show("Se cancelo la operación");
+            }
+        }
+
+        private void msi_asignarAlumno_Click(object sender, EventArgs e)
+        {
+            if (dtgv_materias.SelectedRows.Count > 0)
+            {
+                Materia materia = (Materia)dtgv_materias.CurrentRow.DataBoundItem;
+                FrmElegirAlumno frm = new FrmElegirAlumno(materia.Nombre);
+                DialogResult respuesta = frm.ShowDialog();
+
+                if (respuesta == DialogResult.OK)
+                {
+
+                    if (frm.Alumno is not null && frm.Alumno.InscribirseAMateria(materia))
+                    {
+                        MessageBox.Show($"Se agrego el profesor {frm.Alumno.Apellido} {frm.Alumno.Nombre} a la materia {materia.Nombre}");
+                        Refrescar();
+                    }
+                }
+                else if (respuesta == DialogResult.Cancel)
+                {
+                    MessageBox.Show("Se cancelo la operación");
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("Tiene que seleccionar una materia");
+
+            }
         }
     }
 }

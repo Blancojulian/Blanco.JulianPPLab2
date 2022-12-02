@@ -263,6 +263,26 @@ namespace BibliotecaEntidades.Entidades
 
 
         }
+        public static float CalcularNotaPromedio(Materia m, Alumno a)
+        {
+            EstadoAlumno? estado = Materia.GetEstado(m, a);
+            float promedio = 0;
+
+            if(estado is not null)
+            {
+                if (estado.PrimerExamen.Rendido && estado.SegundoExamen.Rendido)
+                {
+                    promedio = (estado.PrimerExamen.Nota + estado.SegundoExamen.Nota) / 2;
+
+                }
+                else if(estado.PrimerExamen.Rendido)
+                {
+                    promedio = estado.PrimerExamen.Nota;
+                }
+            }
+
+            return promedio;
+        }
         public static bool DarAsistencia(Materia m, Alumno a)
         {
             bool retorno = false;

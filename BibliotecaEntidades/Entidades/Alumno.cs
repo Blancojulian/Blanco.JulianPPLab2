@@ -35,7 +35,24 @@ namespace BibliotecaEntidades.Entidades
         {
             return $"{Apellido} {Nombre}";
         }
+        public static bool InscribirAlumnoAMateria(Materia materia, Alumno alumno)
+        {
 
+            bool retorno = false;
+            bool boolean = alumno.AgregarCantidadMateriaCursada();
+
+            if (boolean && materia + alumno)
+            {
+                alumno._materias.Add(materia);
+                retorno = true;
+            }
+            else if (boolean)
+            {
+                alumno.RestarCantidadMateriaCursada();
+            }
+
+            return retorno;
+        }
         public bool InscribirseAMateria(Materia materia)
         {
 
@@ -54,7 +71,7 @@ namespace BibliotecaEntidades.Entidades
 
             return retorno;
         }
-        private bool AgregarCantidadMateriaCursada()
+        public bool AgregarCantidadMateriaCursada()
         {
             bool retorno = false;
 

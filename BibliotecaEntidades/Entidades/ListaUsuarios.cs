@@ -119,5 +119,24 @@ namespace BibliotecaEntidades.Entidades
                 return listaProfesores;
             }
         }
+
+        public List<Alumno> ListaAlumnos
+        {
+            get
+            {
+                List<Alumno> listaProfesores = new List<Alumno>();
+
+                foreach (Usuario usuario in _lista)
+                {
+                    if (usuario.NivelUsuario == NivelUsuario.Alumno)
+                    {
+                        listaProfesores.Add((Alumno)usuario);
+
+                    }
+                }
+
+                return listaProfesores;
+            }
+        }
     }
 }

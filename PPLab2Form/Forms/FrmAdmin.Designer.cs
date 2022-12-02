@@ -37,9 +37,13 @@
             this.msi_crear = new System.Windows.Forms.ToolStripMenuItem();
             this.msi_crearUsuario = new System.Windows.Forms.ToolStripMenuItem();
             this.msi_crearMateria = new System.Windows.Forms.ToolStripMenuItem();
+            this.estadisticasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.msi_calcularCantidadDeAlumnos = new System.Windows.Forms.ToolStripMenuItem();
+            this.msi_calcularLaNotaPromedio = new System.Windows.Forms.ToolStripMenuItem();
+            this.cerrarSesiónToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lbl_materias = new System.Windows.Forms.Label();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.cerrarSesiónToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.msi_asignarAlumno = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dtgv_materias)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -69,7 +73,9 @@
             this.menuToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.msi_cambiarEstado,
             this.msi_asignarProfesorAMateria,
-            this.msi_crear});
+            this.msi_crear,
+            this.estadisticasToolStripMenuItem,
+            this.msi_asignarAlumno});
             this.menuToolStripMenuItem.Name = "menuToolStripMenuItem";
             this.menuToolStripMenuItem.Size = new System.Drawing.Size(50, 20);
             this.menuToolStripMenuItem.Text = "Menu";
@@ -111,6 +117,35 @@
             this.msi_crearMateria.Text = "Crear Materia";
             this.msi_crearMateria.Click += new System.EventHandler(this.msi_crearMateria_Click);
             // 
+            // estadisticasToolStripMenuItem
+            // 
+            this.estadisticasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.msi_calcularCantidadDeAlumnos,
+            this.msi_calcularLaNotaPromedio});
+            this.estadisticasToolStripMenuItem.Name = "estadisticasToolStripMenuItem";
+            this.estadisticasToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
+            this.estadisticasToolStripMenuItem.Text = "Estadisticas";
+            // 
+            // msi_calcularCantidadDeAlumnos
+            // 
+            this.msi_calcularCantidadDeAlumnos.Name = "msi_calcularCantidadDeAlumnos";
+            this.msi_calcularCantidadDeAlumnos.Size = new System.Drawing.Size(299, 22);
+            this.msi_calcularCantidadDeAlumnos.Text = "Calcular cantidad de alumnos por profesor";
+            this.msi_calcularCantidadDeAlumnos.Click += new System.EventHandler(this.msi_calcularCantidadDeAlumnos_Click);
+            // 
+            // msi_calcularLaNotaPromedio
+            // 
+            this.msi_calcularLaNotaPromedio.Name = "msi_calcularLaNotaPromedio";
+            this.msi_calcularLaNotaPromedio.Size = new System.Drawing.Size(299, 22);
+            this.msi_calcularLaNotaPromedio.Text = "Calcular la nota promedio de cada alumno";
+            this.msi_calcularLaNotaPromedio.Click += new System.EventHandler(this.msi_calcularLaNotaPromedio_Click);
+            // 
+            // cerrarSesiónToolStripMenuItem
+            // 
+            this.cerrarSesiónToolStripMenuItem.Name = "cerrarSesiónToolStripMenuItem";
+            this.cerrarSesiónToolStripMenuItem.Size = new System.Drawing.Size(87, 20);
+            this.cerrarSesiónToolStripMenuItem.Text = "Cerrar sesión";
+            // 
             // lbl_materias
             // 
             this.lbl_materias.AutoSize = true;
@@ -126,11 +161,12 @@
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
-            // cerrarSesiónToolStripMenuItem
+            // msi_asignarAlumno
             // 
-            this.cerrarSesiónToolStripMenuItem.Name = "cerrarSesiónToolStripMenuItem";
-            this.cerrarSesiónToolStripMenuItem.Size = new System.Drawing.Size(87, 20);
-            this.cerrarSesiónToolStripMenuItem.Text = "Cerrar sesión";
+            this.msi_asignarAlumno.Name = "msi_asignarAlumno";
+            this.msi_asignarAlumno.Size = new System.Drawing.Size(213, 22);
+            this.msi_asignarAlumno.Text = "Asignar alumno a materia";
+            this.msi_asignarAlumno.Click += new System.EventHandler(this.msi_asignarAlumno_Click);
             // 
             // FrmAdmin
             // 
@@ -165,5 +201,9 @@
         private ToolStripMenuItem msi_crearUsuario;
         private ToolStripMenuItem msi_crearMateria;
         private ToolStripMenuItem cerrarSesiónToolStripMenuItem;
+        private ToolStripMenuItem estadisticasToolStripMenuItem;
+        private ToolStripMenuItem msi_calcularCantidadDeAlumnos;
+        private ToolStripMenuItem msi_calcularLaNotaPromedio;
+        private ToolStripMenuItem msi_asignarAlumno;
     }
 }

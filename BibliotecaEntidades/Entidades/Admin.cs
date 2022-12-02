@@ -56,12 +56,17 @@ namespace BibliotecaEntidades.Entidades
         {
             return Materia.SetEstadoAlumno(materia, alumno, estado);
         }
-        //ver si se puedo usar, este tema no lo dio
+        
         public T CrearUsuario <T>(string nombre, string apellido, string contrasenia, int dni) where T : new()
         {
             T usuario = new T();
             return usuario;
             //return new T(nombre, apellido, contrasenia, dni);
+        }
+
+        public bool InscribirseAMateria(Materia materia, Alumno alumno)
+        {
+            return Alumno.InscribirAlumnoAMateria(materia, alumno);
         }
 
     }
